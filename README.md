@@ -96,7 +96,8 @@ Chaning lanes when a low spped car is in front of the car and it is safe to chan
 
 Most of the codes are copied from the seed project, two separated subroutines are defined for the the purpose of changing lanes:
 
-- 
+- vector< bool > check_lane_is_safe (int lane, int prev_size, double car_s, double car_speed, double max_s, vector< vector< double> > sensor_fusion)
+- int change_lane(int current_lane, int prev_size, double car_s, double car_speed, double max_s, vector< vector< double> > sensor_fusion)
 
 ### Check the safty of changing lanes:
 By dealing with the telemetry and sensor fusion data, the algorithem intends to check the safty through three steps:
