@@ -90,6 +90,8 @@ The car stays in its lane most of the time except changing lanes or due to traff
 ### The car is able to change lanes
 Chaning lanes when a low spped car is in front of the car and it is safe to change.
 
+![changing lane](changing_lanePath_planning_miles.JPG)
+
 ## Reflection
 
 Most of the codes are copied from the seed project, two separated subroutines are defined for the the purpose of changing lanes:
