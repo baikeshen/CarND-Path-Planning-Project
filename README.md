@@ -60,81 +60,54 @@ the path has processed since last time.
 
 2. There will be some latency between the simulator running and the path planner returning a path, with optimized code usually its not very long maybe just 1-3 time steps. During this delay the simulator will continue using points that it was last given, because of this its a good idea to store the last points you have used so you can have a smooth transition. previous_path_x, and previous_path_y can be helpful for this transition since they show the last points given to the simulator controller with the processed points already removed. You would either return a path that extends this previous path or make sure to create a new path that has a smooth transition with this last path.
 
-## Tips
+## Compilation
 
-A really helpful resource for doing this project and creating smooth trajectories was using http://kluge.in-chemnitz.de/opensource/spline/, the spline function is in a single hearder file is really easy to use.
+### The code compiles correctly.
 
----
+No changes were made in the cmake configuration. A new file was added [src/spline.h](./scr/spline.h). It is the [Cubic Spline interpolation implementation](http://kluge.in-chemnitz.de/opensource/spline/): a single .h file you can use splines instead of polynomials. It was a great suggestion from the classroom QA video. It works great.
 
-## Dependencies
+## Valid trajectories
 
-* cmake >= 3.5
-  * All OSes: [click here for installation instructions](https://cmake.org/install/)
-* make >= 4.1
-  * Linux: make is installed by default on most Linux distros
-  * Mac: [install Xcode command line tools to get make](https://developer.apple.com/xcode/features/)
-  * Windows: [Click here for installation instructions](http://gnuwin32.sourceforge.net/packages/make.htm)
-* gcc/g++ >= 5.4
-  * Linux: gcc / g++ is installed by default on most Linux distros
-  * Mac: same deal as make - [install Xcode command line tools]((https://developer.apple.com/xcode/features/)
-  * Windows: recommend using [MinGW](http://www.mingw.org/)
-* [uWebSockets](https://github.com/uWebSockets/uWebSockets)
-  * Run either `install-mac.sh` or `install-ubuntu.sh`.
-  * If you install from source, checkout to commit `e94b6e1`, i.e.
-    ```
-    git clone https://github.com/uWebSockets/uWebSockets 
-    cd uWebSockets
-    git checkout e94b6e1
-    ```
+### The car is able to drive at least 4.32 miles without incident.
+I ran the simulator for 4.5 miles without incidents:
 
-## Editor Settings
-
-We've purposefully kept editor configuration files out of this repo in order to
-keep it as simple and environment agnostic as possible. However, we recommend
-using the following settings:
-
-* indent using spaces
-* set tab width to 2 spaces (keeps the matrices in source code aligned)
-
-## Code Style
-
-Please (do your best to) stick to [Google's C++ style guide](https://google.github.io/styleguide/cppguide.html).
-
-## Project Instructions and Rubric
-
-Note: regardless of the changes you make, your project must be buildable using
-cmake and make!
+![4.5 miles](Path_planning_4miles.JPG)
 
 
-## Call for IDE Profiles Pull Requests
 
-Help your fellow students!
+### The car drives according to the speed limit.
+No speed limit red message
 
-We decided to create Makefiles with cmake to keep this project as platform
-agnostic as possible. Similarly, we omitted IDE profiles in order to ensure
-that students don't feel pressured to use one IDE or another.
+### Max Acceleration and Jerk are not Exceeded.
+Max jerk red message.
 
-However! I'd love to help people get up and running with their IDEs of choice.
-If you've created a profile for an IDE that you think other students would
-appreciate, we'd love to have you add the requisite profile files and
-instructions to ide_profiles/. For example if you wanted to add a VS Code
-profile, you'd add:
+### Car does not have collisions.
+No collisions.
 
-* /ide_profiles/vscode/.vscode
-* /ide_profiles/vscode/README.md
+### The car stays in its lane, except for the time between changing lanes.
+The car stays in its lane most of the time except changing lanes or due to traffic.
 
-The README should explain what the profile does, how to take advantage of it,
-and how to install it.
+### The car is able to change lanes
+Chaning lanes when a low spped car is in front of the car and it is safe to change.
 
-Frankly, I've never been involved in a project with multiple IDE profiles
-before. I believe the best way to handle this would be to keep them out of the
-repo root to avoid clutter. My expectation is that most profiles will include
-instructions to copy files to a new location to get picked up by the IDE, but
-that's just a guess.
+## Reflection
 
-One last note here: regardless of the IDE used, every submitted project must
-still be compilable with cmake and make./
+Most of the codes are copied from the seed project, two separated subroutines are defined for the the purpose of changing lanes:
 
-## How to write a README
-A well written README file can enhance your project and portfolio.  Develop your abilities to create professional README files by completing [this free course](https://www.udacity.com/course/writing-readmes--ud777).
+- 
+
+### Check the safty of changing lanes:
+By dealing with the telemetry and sensor fusion data, the algorithem intends to check the safty through three steps:
+
+- Any car in front of us blocking the traffic.
+- Any car to the right of our current lane is within the dangerous range.
+- Any car to the left of our current lanes is within the dangerous range.
+
+To consider it as "dangerous" if its distance to our car is less than 30 meters in front or behind us.
+
+### Decision to make
+
+Based on the prediction, our car will increases the speed, decrease speed, or make a lane change when it is safe. 
+
+
 
